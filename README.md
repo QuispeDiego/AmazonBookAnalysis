@@ -21,6 +21,7 @@ El análisis también revela la relación entre el precio, la cantidad de review
 2. **Transformación de datos**: Se transformaron los datos numéricos a su tipo original (entero o flotante).
 3. **Revisión de valores nulos**: No se encontraron valores nulos o vacíos, por lo que se procedió a guardar los cambios.
 4. **Selección de colores**: Se seleccionaron colores para mostrar los precios y la correlación de las principales variables: precio, cantidad de reviews y calificaciones.
+![damz_2](https://github.com/QuispeDiego/An-lisis-del-Comportamiento-de-Compra-de-Libros-en-Amazon-2009-2019-/assets/89101133/331ec8f5-93fe-4a2b-97e5-4e44f0046e28)
 5. **Creación de columnas con DAX**: Se crearon columnas para manejar mejor los valores de los libros y mejorar su visualización.
     - **Rango de Calificación**:
     ```DAX
@@ -42,7 +43,7 @@ El análisis también revela la relación entre el precio, la cantidad de review
         "Alto"
     )
     ```
-6. **Generación de la tabla 'top 10'**: Se generó una tabla con los libros mejor calificados de cada año usando Python y DAX.
+6. **Generación de la tabla 'top 10'**: Para visualizar el impacto de las tres variables en los libros, se decidió analizar los libros más vendidos. Esta elección se basó en su capacidad para generar mayores ventas. Se generó una tabla 'top 10' que incluye únicamente los libros mejor calificados de cada año. Además, se creó una métrica para contar la cantidad de libros que están en el top 10.
     ```python
     # Ordenar filas por Año y User Rating
     df_sorted = df.sort_values(by=['Year', 'User Rating'], ascending=[True, False])
@@ -53,7 +54,7 @@ El análisis también revela la relación entre el precio, la cantidad de review
     ```DAX
     Cantidad libros top 10 = DISTINCTCOUNT(top10[Name])
     ```
-7. **Visualización en gráfico de barras**: Se usó un gráfico de barras para mostrar los libros que se mantenían más tiempo en el top 10.
+7. **Visualización en gráfico de barras**: Se usó un gráfico de barras para mostrar los libros que se mantenían más tiempo en el top 10.Ademas, se filtro solo para que solo se muestren las 10 primeras barras. Aqui se uso Name de la tabla Top10, tanto para el etiquetado como para el recuento de apariciones de Name.
 8. **Matriz de correlación**: Se realizó una matriz de correlación para user rating, price y reviews usando Python.
     ```python
     correlation_matrix = df[['User Rating', 'Price', 'Reviews']].corr()
@@ -63,12 +64,11 @@ El análisis también revela la relación entre el precio, la cantidad de review
     plt.show()
     ```
 9. **Distribución con boxplot**: Se realizaron boxplots para analizar la distribución del precio y rating según género y rango de precio.
-10. **Filtros adicionales**: Se añadieron filtros por nombre del libro y rango de año.
+10. **Filtros adicionales**: Se añadieron 2 cajas de filtros por nombre del libro y rango de año.
 11. **Etiqueta de cantidad de libros en el top 10**: Se añadió una etiqueta para mostrar la cantidad de libros en el top 10 basada en la métrica "Cantidad de libros top 10".
 
 # Report Snapshot (Power BI DESKTOP)
-
-
+![dashboardAmazon](https://github.com/QuispeDiego/An-lisis-del-Comportamiento-de-Compra-de-Libros-en-Amazon-2009-2019-/assets/89101133/88f74e95-ab07-4583-ad04-cb3ded7284bf)
 
 # Insights
 
@@ -103,6 +103,10 @@ Esto muestra que los libros en las tres categorías tienen una similitud alta en
 
 ### Hipótesis 2 (Verdadera): No necesariamente los géneros mejor calificados son los más caros
 
+![damz_1](https://github.com/QuispeDiego/An-lisis-del-Comportamiento-de-Compra-de-Libros-en-Amazon-2009-2019-/assets/89101133/1ef3f800-ac98-4a3f-8c48-b1675c50ab25)
+
+Por medio de otro grafico, se comparo tambien el promedio de calificacion de los dos generos, y se nota que ambas medias no difieren tanto una de la otra, por lo que solo quedaria comprobar si alguno de estos dos tienen algun comportamiento en sus precios. 
+
 Según el gráfico de boxplot, el resumen estadístico del precio de los libros de ficción y no ficción es:
 
 - **Libros de ficción**:
@@ -119,7 +123,7 @@ Según el gráfico de boxplot, el resumen estadístico del precio de los libros 
     - IQR 75: 17
     - IQR 25: 8
 
-La comparación de las calificaciones promedio de los dos géneros muestra que no hay una diferencia significativa. Esto nos lleva a concluir que no necesariamente los géneros mejor calificados son los más caros.
+Ahora, segun estas estadisticas mostradas se puede notar que la diferencia entre los valores de ambos tipos es similar. Esto nos lleva a concluir que no necesariamente los generos mejores calificados son los mas caros.
 
 ### Hipótesis 3 (Verdadera): Los precios de los libros están asociados a eventos exógenos y no al tipo de género
 
